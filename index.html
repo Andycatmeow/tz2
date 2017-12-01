@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Learn</title>
+        <link rel="stylesheet" type="text/css" href="css/screen.css">
+        <link rel="stylesheet" type="text/css" href="css/notifier.min.css">
+    </head>
+    <body>
+        <div id="wrap">
+            <div class="info-section">
+                <div class="content">
+                    <div class="group">
+                        <h2>Тестовое задание</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="request-section">
+                <div class="content group">
+                    <div class="request-info">
+                        <h2>Форма</h2>
+                        <p>
+                            Заполните форму...
+                        </p>
+                    </div>
+                    <div class="form-wrap group">
+                        <form id="request-form" class="group" action="javascript:void(null);" onsubmit="call()">
+                            <div class="form-entry">
+                                <div class="form-group">
+                                    <label>Имя</label>
+                                    <input name="name" type="text" class="form-control" required="" aria-required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label>Телефон</label>
+                                    <input name="phone" type="text" class="form-control" required="" aria-required="true" id="phone">
+                                </div>
+                            </div>
+                            <div class="form-entry-last">
+                                <div class="form-group">
+                                    <label>Сообщение</label>
+                                    <textarea name="message" class="form-control" style="height: 182px; max-width: 455px;"></textarea>
+                                </div>
+                                <div class="form-group fg-last">
+                                    <button name="Submit" type="submit" class="main-button">Отправить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results"></div>
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/notifier.min.js"></script>
+        <script src="js/jquery.maskedinput.min.js"></script>
+        <script>
+            $().ready(function() {
+                $("#request-form").validate();
+            });
+        </script>
+        <script>
+            function call() {
+                var msg   = $('#request-form').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: 'request.php',
+                    data: msg,
+                    success: function(data) {
+                        $('#results').html(data);
+                    },
+                    error: function(xhr, str) {
+                        alert('Возникла ошибка: ' + xhr.responseCode);
+                    }
+                });
+           }
+       </script>
+       <script>
+           jQuery(function($){
+                $("#phone").mask("(999) 999-99-99");
+            });
+       </script>
+       <script>function deleteform() {
+            $(document).ready(function(){
+                $("#request-form").remove();
+            });
+       }
+       </script>
+    </body>
+</html>
